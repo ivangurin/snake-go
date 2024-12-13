@@ -1,6 +1,6 @@
 PHONY: build
 build: 
-	go build -o ./build ./cmd/main.go
+	go build -o ./build/snake ./cmd/main.go
 
 PHONY: run
 run: 
