@@ -133,15 +133,15 @@ func (g *Game) isCollision() bool {
 func (g *Game) drawSnake(screen *ebiten.Image, snake *snake.Snake) {
 	for i, point := range snake.GetPoints() {
 		if i == 0 {
-			vector.DrawFilledRect(screen, float32(point.X*g.gridSize), float32(point.Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{254, 241, 96, 1}, true)
+			vector.DrawFilledRect(screen, float32(point.X*g.gridSize), float32(point.Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{0, 160, 100, 0}, true)
 		} else {
-			vector.DrawFilledRect(screen, float32(point.X*g.gridSize), float32(point.Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.White, true)
+			vector.DrawFilledRect(screen, float32(point.X*g.gridSize), float32(point.Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{0, 220, 100, 0}, true)
 		}
 	}
 }
 
 func (g *Game) drawFood(screen *ebiten.Image, food *food.Food) {
-	vector.DrawFilledRect(screen, float32(food.GetPoint().X*g.gridSize), float32(food.GetPoint().Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{255, 0, 0, 0}, true)
+	vector.DrawFilledRect(screen, float32(food.GetPoint().X*g.gridSize), float32(food.GetPoint().Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{217, 30, 24, 0}, true)
 }
 
 func (g *Game) drawScore(screen *ebiten.Image) {
@@ -156,14 +156,14 @@ func (g *Game) drawGameOver(screen *ebiten.Image) {
 	gameOverText := "Game Over"
 	textWidth, textHeight := text.Measure(gameOverText, font24, font24.Size)
 	options := &text.DrawOptions{}
-	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)-20)
+	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)-30)
 	options.ColorScale.ScaleWithColor(color.White)
 	text.Draw(screen, gameOverText, font24, options)
 
 	pressEnterText := "Press Enter to start again"
 	textWidth, textHeight = text.Measure(pressEnterText, font12, font12.Size)
 	options = &text.DrawOptions{}
-	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)+20)
+	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)+10)
 	options.ColorScale.ScaleWithColor(color.White)
 	text.Draw(screen, pressEnterText, font12, options)
 }
