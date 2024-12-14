@@ -12,14 +12,18 @@ func NewSnake(width, height int, direction *model.Point) *Snake {
 }
 
 func (s *Snake) Move() {
+	if s.newDirection != nil {
+		if s.direction.X != -s.newDirection.X || s.direction.Y != -s.newDirection.Y {
+			s.direction = s.newDirection
+			s.newDirection = nil
+		}
+	}
+
 	s.points = append([]model.Point{s.getNewHead()}, s.points[:len(s.points)-1]...)
 }
 
 func (s *Snake) SetDirection(direction *model.Point) {
-	if direction.X == -s.direction.X && direction.Y == -s.direction.Y {
-		return
-	}
-	s.direction = direction
+	s.newDirection = direction
 }
 
 func (s *Snake) GetHeadPoint() *model.Point {

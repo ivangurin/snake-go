@@ -1,6 +1,7 @@
 package game
 
 import (
+	"image/color"
 	"snake-go/internal/food"
 	"snake-go/internal/snake"
 	"time"
@@ -21,6 +22,12 @@ type Game struct {
 
 var (
 	textSource *text.GoTextFaceSource
-	font12     *text.GoTextFace
-	font24     *text.GoTextFace
+
+	font12 *text.GoTextFace
+	font24 *text.GoTextFace
+
+	colorSnakeHead = color.RGBA{0, 160, 100, 0}
+	colorSnakeBody = color.RGBA{0, 220, 100, 0}
+	colorFood      = color.RGBA{217, 30, 24, 0}
+	colorText      = color.White
 )
