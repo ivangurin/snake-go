@@ -19,4 +19,8 @@ type Game struct {
 	gameOver   bool
 }
 
-var textSource *text.GoTextFaceSource
+var (
+	textSource *text.GoTextFaceSource
+	font12     *text.GoTextFace
+	font24     *text.GoTextFace
+)

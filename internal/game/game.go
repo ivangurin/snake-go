@@ -27,6 +27,16 @@ func NewGame(width, height int) (*Game, error) {
 		return nil, fmt.Errorf("failed to load font: %w", err)
 	}
 
+	font12 = &text.GoTextFace{
+		Source: textSource,
+		Size:   12,
+	}
+
+	font24 = &text.GoTextFace{
+		Source: textSource,
+		Size:   24,
+	}
+
 	return &Game{
 		width:     width,
 		height:    height,
@@ -101,6 +111,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		return
 	}
 
+	g.drawScore(screen)
 	g.drawSnake(screen, g.snake)
 	g.drawFood(screen, g.food)
 }
@@ -133,26 +144,26 @@ func (g *Game) drawFood(screen *ebiten.Image, food *food.Food) {
 	vector.DrawFilledRect(screen, float32(food.GetPoint().X*g.gridSize), float32(food.GetPoint().Y*g.gridSize), float32(g.gridSize), float32(g.gridSize), color.RGBA{255, 0, 0, 0}, true)
 }
 
-func (g *Game) drawGameOver(screen *ebiten.Image) {
-	face := &text.GoTextFace{
-		Source: textSource,
-		Size:   24,
-	}
+func (g *Game) drawScore(screen *ebiten.Image) {
+	score := fmt.Sprintf("%d", g.snake.GetScore())
+	options := &text.DrawOptions{}
+	options.GeoM.Translate(float64(g.gridSize), float64(g.gridSize))
+	options.ColorScale.ScaleWithColor(color.White)
+	text.Draw(screen, score, font12, options)
+}
 
-	textWidth, textHeight := text.Measure("Game Over", face, face.Size)
+func (g *Game) drawGameOver(screen *ebiten.Image) {
+	gameOverText := "Game Over"
+	textWidth, textHeight := text.Measure(gameOverText, font24, font24.Size)
 	options := &text.DrawOptions{}
 	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)-20)
 	options.ColorScale.ScaleWithColor(color.White)
-	text.Draw(screen, "Game Over", face, options)
+	text.Draw(screen, gameOverText, font24, options)
 
-	face = &text.GoTextFace{
-		Source: textSource,
-		Size:   12,
-	}
-
-	textWidth, textHeight = text.Measure("Press Enter to start again", face, face.Size)
+	pressEnterText := "Press Enter to start again"
+	textWidth, textHeight = text.Measure(pressEnterText, font12, font12.Size)
 	options = &text.DrawOptions{}
 	options.GeoM.Translate(float64(g.width*g.gridSize/2)-float64(textWidth/2), float64(g.height*g.gridSize/2)-float64(textHeight/2)+20)
 	options.ColorScale.ScaleWithColor(color.White)
-	text.Draw(screen, "Press Enter to start again", face, options)
+	text.Draw(screen, pressEnterText, font12, options)
 }

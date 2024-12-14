@@ -54,3 +54,7 @@ func (s *Snake) getNewHead() model.Point {
 
 	return newHead
 }
+
+func (s *Snake) GetScore() int {
+	return len(s.points) - 1
+}
