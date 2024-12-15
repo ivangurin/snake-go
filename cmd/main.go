@@ -1,17 +1,14 @@
 package main
 
 import (
-	"snake-go/internal/game"
+	game "snake-go/internal/app"
 )
 
 func main() {
-	game, err := game.NewGame(
-		30,
-		20,
-	)
+	app, err := game.NewApp(30, 20)
 	if err != nil {
 		panic(err)
 	}
 
-	game.Run()
+	app.Run()
 }

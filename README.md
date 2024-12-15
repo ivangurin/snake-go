@@ -1,6 +1,12 @@
 # Snake Game
 
-![screenshot](./img/screenshot.png)
+Menu
+
+![menu](./img/menu.png)
+
+Game
+
+![game](./img/game.png)
 
 ## How to start
 

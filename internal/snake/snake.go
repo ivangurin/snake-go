@@ -2,11 +2,11 @@ package snake
 
 import "snake-go/internal/model"
 
-func NewSnake(width, height int, direction *model.Point) *Snake {
+func NewSnake(width, height int, x, y int, direction *model.Point) *Snake {
 	return &Snake{
 		width:     width,
 		height:    height,
-		points:    []model.Point{{X: width / 2, Y: height / 2}},
+		points:    []model.Point{{X: x, Y: y}},
 		direction: direction,
 	}
 }
