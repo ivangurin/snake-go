@@ -21,13 +21,16 @@ jobs:
         env:
           GOOS: darwin
           GOARCH: arm64
-        run: go build -trimpath -a -o ./build/snake ./cmd/main.go
+        run: |
+          go build -trimpath -a -o ./build/snake ./cmd/main.go
+          chmod +x ./build/snake
+          zip -j ./build/snake-macos.zip ./build/snake
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v7
         with:
           name: macos-binaries
-          path: ./build/snake
+          path: ./build/snake-macos.zip
 
   build-windows:
     runs-on: windows-latest
@@ -44,13 +47,15 @@ jobs:
         env:
           GOOS: windows
           GOARCH: amd64
-        run: go build -trimpath -a -o ./build/snake.exe ./cmd/main.go
+        run: |
+          go build -trimpath -a -o ./build/snake.exe ./cmd/main.go
+          Compress-Archive -Path ./build/snake.exe -DestinationPath ./build/snake-windows.zip
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v7
         with:
           name: windows-binaries
-          path: ./build/snake.exe
+          path: ./build/snake-windows.zip
 
   release:
     needs: [ build-macos, build-windows ]
@@ -71,13 +76,10 @@ jobs:
           name: windows-binaries
           path: ./build
 
-      - name: Set executable permission
-        run: chmod +x ./build/snake
-
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           files: |
-            ./build/snake
-            ./build/snake.exe
+            ./build/snake-macos.zip
+            ./build/snake-windows.zip
           generate_release_notes: true
