@@ -71,6 +71,9 @@ jobs:
           name: windows-binaries
           path: ./build
 
+      - name: Set executable permission
+        run: chmod +x ./build/snake
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
